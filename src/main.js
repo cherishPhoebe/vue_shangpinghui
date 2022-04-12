@@ -18,6 +18,7 @@ Vue.component(Pagination.name,Pagination)
 
 Vue.config.productionTip = false
 
+import "@/plugins/validate";
 
 new Vue({
   render: h => h(App),

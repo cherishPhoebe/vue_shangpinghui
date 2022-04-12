@@ -1,4 +1,4 @@
-import { reqGetCode } from "@/api"
+import { reqGetCode, reqUserRegister } from "@/api"
 
 const state = {
     code:''
@@ -14,6 +14,9 @@ const actions = {
         if(result.code == 200){
             commit("getCode",result.data);
         }
+    },
+    async userRegister({commit},data){
+        await reqUserRegister(data)
     }
 }
 const getters = {}

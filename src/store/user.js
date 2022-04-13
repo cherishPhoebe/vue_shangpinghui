@@ -19,9 +19,10 @@ const actions = {
         if(result.code == 200){
             commit("getCode",result.data);
         }
+        return result
     },
     async userRegister({commit},data){
-        await reqUserRegister(data)
+        return await reqUserRegister(data)
     },
     async userLogin({commit},data){
         let result = await reqUserLogin(data);
@@ -29,6 +30,7 @@ const actions = {
             commit('userLogin',result.data.token)
             setToken(result.data.token);
         }
+        return result;
     }
 }
 const getters = {}

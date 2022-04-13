@@ -118,12 +118,18 @@ export default {
     },
     async userRegister() {
       const success = await this.$validator.validateAll()
-      console.log(success)
+
       if (success) {
         const { phone, code, password, password1 } = this
         this.$store
           .dispatch('userRegister', { phone, code, password })
-          .then(res => this.$router.push('/login'))
+          .then(res => {
+            if (res.code == 200) {
+              this.$router.push('/login')
+            } else {
+              alert(res.message)
+            }
+          })
           .catch(err => alert(err.message))
       }
     }

@@ -75,23 +75,27 @@
 <script>
 export default {
   name: 'Login',
-  data(){
+  data() {
     return {
-      phone:'',
-      password:''
+      phone: '',
+      password: ''
     }
   },
-  methods:{
-    userLogin(){
-      const {phone,password} = this;
-      if(phone && password){
-        this.$store.dispatch('userLogin',{phone,password})
-        .then( res => {
-          console.log(res);
-          this.$router.push('/home')})
-        .catch(err => 
-          alert(err.message)
-        );
+  methods: {
+    userLogin() {
+      const { phone, password } = this
+      if (phone && password) {
+        this.$store
+          .dispatch('userLogin', { phone, password })
+          .then(res => {
+            console.log(res)
+            if (res.code == 200) {
+              this.$router.push('/home')
+            } else {
+              alert(res.message)
+            }
+          })
+          .catch(err => alert(err.message))
       }
     }
   }

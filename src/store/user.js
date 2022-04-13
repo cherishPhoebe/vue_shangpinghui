@@ -1,11 +1,16 @@
-import { reqGetCode, reqUserRegister } from "@/api"
+import { reqGetCode, reqUserLogin, reqUserRegister } from "@/api"
+import { getToken, setToken } from "@/utils/token";
 
 const state = {
-    code:''
+    code:'',
+    token:getToken()
 }
 const mutations = {
     getCode(state,code){
         state.code = code;
+    },
+    userLogin(state,token){
+        state.token = token
     }
 }
 const actions = {
@@ -17,6 +22,13 @@ const actions = {
     },
     async userRegister({commit},data){
         await reqUserRegister(data)
+    },
+    async userLogin({commit},data){
+        let result = await reqUserLogin(data);
+        if(result.code == 200){
+            commit('userLogin',result.data.token)
+            setToken(result.data.token);
+        }
     }
 }
 const getters = {}

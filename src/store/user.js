@@ -1,16 +1,25 @@
-import { reqGetCode, reqUserLogin, reqUserRegister } from "@/api"
-import { getToken, setToken } from "@/utils/token";
+import { reqGetCode, reqGetUserInfo, reqUserLogin, reqUserLogout, reqUserRegister } from "@/api"
+import { getToken, removeToken, setToken } from "@/utils/token";
 
 const state = {
     code:'',
-    token:getToken()
+    token:getToken(),
+    userInfo:{}
 }
 const mutations = {
     getCode(state,code){
         state.code = code;
     },
     userLogin(state,token){
-        state.token = token
+        state.token = token;
+    },
+    getUserInfo(state,userInfo){
+        state.userInfo = userInfo;
+    },
+    userLogout(state){
+        state.token = '';
+        state.userInfo = {};
+        removeToken();
     }
 }
 const actions = {
@@ -29,6 +38,20 @@ const actions = {
         if(result.code == 200){
             commit('userLogin',result.data.token)
             setToken(result.data.token);
+        }
+        return result;
+    },
+    async getUserInfo({commit}){
+        let result = await reqGetUserInfo();
+        if(result.code == 200){
+            commit('getUserInfo',result.data);
+        }
+        return result;
+    },
+    async userLogout({commit}){
+        let result = await reqUserLogout();
+        if(result.code == 200){
+            commit('userLogout');
         }
         return result;
     }

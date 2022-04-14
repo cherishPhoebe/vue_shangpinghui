@@ -32,3 +32,9 @@ export const reqUserRegister = (data) => requests({url:`/user/passport/register`
 
 // 登录
 export const reqUserLogin = (data) => requests({url:`/user/passport/login`,data,method:'post'})
+
+// 获取用户信息
+export const reqGetUserInfo = () => requests({url:`/user/passport/auth/getuserinfo`,method:'get'})
+
+// 退出登录
+export const reqUserLogout = () => requests({url:`/user/passport/logout`,method:'get'})

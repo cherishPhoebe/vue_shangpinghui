@@ -1,7 +1,7 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import routes from './routes'
-
+import store from ''
 // 使用路由组件
 Vue.use(VueRouter)
 
@@ -29,7 +29,7 @@ VueRouter.prototype.replace = function(location,resolve,reject){
 
 
 // 配置路由
-export default new VueRouter({
+let router = new VueRouter({
     routes,
     //滚动行为
     scrollBehavior(to, from, savedPosition) {
@@ -37,3 +37,36 @@ export default new VueRouter({
       return { y: 0 };
     },
 })
+
+router.beforeEach(async (to,from,next) =>{
+    let token = store.state.user.token;
+    let name = store.state.user.userInfo.name;
+    // 如果已经登录了
+    if(token){
+        if(to.path == "/login" || to.path == "/register"){
+            next("/");
+        }else{
+            if(name){
+                next();
+            }else{
+                // 获取用户信息
+                store.dispatch('getUserInfo').then(res =>{
+                    if(res.code == 200){
+                        next();
+                    }else{
+                        await store.dispatch('userLogout');
+                        next('/login')
+                    }
+                }).catch(err =>{
+                    //token失效从新登录
+                    await store.dispatch('userLogout');
+                    next('/login')
+                });
+            }
+        }
+    }else{
+        next();
+    }
+});
+
+export default router;

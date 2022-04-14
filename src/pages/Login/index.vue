@@ -88,7 +88,6 @@ export default {
         this.$store
           .dispatch('userLogin', { phone, password })
           .then(res => {
-            console.log(res)
             if (res.code == 200) {
               this.$router.push('/home')
             } else {

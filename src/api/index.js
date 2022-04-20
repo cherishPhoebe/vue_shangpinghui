@@ -38,3 +38,12 @@ export const reqGetUserInfo = () => requests({url:`/user/passport/auth/getuserin
 
 // 退出登录
 export const reqUserLogout = () => requests({url:`/user/passport/logout`,method:'get'})
+
+// 获取用户收货地址信息
+export const reqGetUserAddressList = () => requests({url:`/user/userAddress/auth/findUserAddressList`,method:'get'})
+
+// 获取结算商品信息
+export const reqGetTradeGoods = () => requests({url:`/order/auth/trade`,method:'get'})
+
+// 提交订单
+export const reqSubmitOrder = (tradNo,data) => requests({url:`/order/auth/submitOrder?tradNo=${tradNo}`,data,method:'post'})

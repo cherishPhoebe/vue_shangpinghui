@@ -7,6 +7,7 @@ import Register from '@/pages/Register'
 import Detail from '@/pages/Detail'
 import AddCartSuccess from '@/pages/AddCartSuccess'
 import ShopCart from '@/pages/ShopCart'
+import Trade from '@/pages/Trade'
 
 export default [{
     path:'/home',
@@ -30,6 +31,17 @@ export default [{
     name:'shopcart',
     path:'/shopcart',
     component:ShopCart
+},{
+    name:'trade',
+    path:'/trade',
+    component:Trade,
+    beforeEnter(to,from,next){
+        if(from.path === '/shopcart'){
+            next();
+        }else{
+            next('/shopcart');
+        }
+    }
 },{
     path:'/login',
     component:Login,

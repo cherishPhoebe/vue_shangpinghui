@@ -41,13 +41,17 @@ const actions = {
         }
         return result;
     },
-    async getUserInfo({commit}){
-        let result = await reqGetUserInfo();
-        if(result.code == 200){
-            commit('getUserInfo',result.data);
-        }
-        return result;
-    },
+      //获取用户信息
+  async getUserInfo({ commit }) {
+    let result = await reqGetUserInfo();
+    if (result.code == 200) {
+      //提交用户信息
+      commit("getUserInfo", result.data);
+      return 'ok';
+    }else{
+      return Promise.reject(new Error('faile'));
+    }
+  },
     async userLogout({commit}){
         let result = await reqUserLogout();
         if(result.code == 200){

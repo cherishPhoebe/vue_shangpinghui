@@ -1,36 +1,36 @@
-import { reqGetUserAddressList, reqOrderInfo } from "@/api"
-
-const state =  {
-    userAddressList:[],
-    orderInfo:{}
-}
+import { reqAddressInfo, reqOrderInfo } from "@/api";
+const state = {
+  address: [],
+  orderInfo:{}
+};
 const mutations = {
-    getUserAddressList(state,userAddressList){
-        state.userAddressList = userAddressList;
-    },
-    getOrderInfo(state,orderInfo){
-        state.orderInfo = orderInfo;
-    }
-}
+  GETUSERADDRESS(state, address) {
+    state.address = address;
+  },
+  GETORDERINFO(state,orderInfo){
+     state.orderInfo = orderInfo;
+  }
+};
 const actions = {
-    async getUserAddressList({commit}){
-        let result = await reqGetUserAddressList();
-        if(result.code == 200){
-            commit('getUserAddressList',result.data);
-        }
-    },
-    async getOrderInfo({commit}){
-        let result = await reqOrderInfo();
-        if(result.code == 200){
-            commit('getOrderInfo',result.data);
-        }
+  //获取用户地址信息
+  async getUserAddress({ commit }) {
+    let result = await reqAddressInfo();
+    if (result.code == 200) {
+      commit("GETUSERADDRESS", result.data);
     }
-}
-const getters = {}
-
+  },
+  //获取商品清单数据
+  async getOrderInfo({commit}) {
+    let result = await reqOrderInfo();
+    if(result.code==200){
+      commit("GETORDERINFO",result.data);
+    }
+  },
+};
+const getters = {};
 export default {
-    state,
-    mutations,
-    actions,
-    getters
-}
+  state,
+  mutations,
+  actions,
+  getters,
+};

@@ -34,13 +34,13 @@ export const reqUserRegister = (data) => requests({url:`/user/passport/register`
 export const reqUserLogin = (data) => requests({url:`/user/passport/login`,data,method:'post'})
 
 // 获取用户信息
-export const reqGetUserInfo = () => requests({url:`/user/passport/auth/getuserinfo`,method:'get'})
+export const reqGetUserInfo = () => requests({url:`/user/passport/auth/getUserInfo`,method:'get'})
 
 // 退出登录
 export const reqUserLogout = () => requests({url:`/user/passport/logout`,method:'get'})
 
 // 获取用户收货地址信息
-export const reqGetUserAddressList = () => requests({url:`/user/userAddress/auth/findUserAddressList`,method:'get'})
+export const reqAddressInfo = () => requests({url:`/user/userAddress/auth/findUserAddressList`,method:'get'})
 
 // 获取结算商品信息
 export const reqOrderInfo = () => requests({url:`/order/auth/trade`,method:'get'})

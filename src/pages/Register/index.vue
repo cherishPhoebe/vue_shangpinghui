@@ -4,18 +4,16 @@
     <div class="register">
       <h3>
         注册新用户
-        <span class="go">
-          我有账号，去
-          <router-link to="/login">登陆</router-link>
+        <span class="go"
+          >我有账号，去 <a href="login.html" target="_blank">登陆</a>
         </span>
       </h3>
       <div class="content">
         <label>手机号:</label>
         <input
-          type="text"
-          name="phone"
           placeholder="请输入你的手机号"
           v-model="phone"
+          name="phone"
           v-validate="{ required: true, regex: /^1\d{10}$/ }"
           :class="{ invalid: errors.has('phone') }"
         />
@@ -24,23 +22,23 @@
       <div class="content">
         <label>验证码:</label>
         <input
-          type="text"
-          name="code"
-          placeholder="请输入验证码"
+          placeholder="请输入你的验证码"
           v-model="code"
+          name="code"
           v-validate="{ required: true, regex: /^\d{6}$/ }"
           :class="{ invalid: errors.has('code') }"
         />
-        <button style="width:100px;height:38px" @click="getCode">获取验证码</button>
+        <button style="width:100px;height:38px" @click="getCode">
+          获取验证码
+        </button>
         <span class="error-msg">{{ errors.first("code") }}</span>
       </div>
       <div class="content">
         <label>登录密码:</label>
         <input
-          type="password"
-          name="password"
-          placeholder="请输入你的登录密码"
+          placeholder="请输入你的密码"
           v-model="password"
+          name="password"
           v-validate="{ required: true, regex: /^[0-9A-Za-z]{8,20}$/ }"
           :class="{ invalid: errors.has('password') }"
         />
@@ -49,10 +47,9 @@
       <div class="content">
         <label>确认密码:</label>
         <input
-          type="password"
-          name="password1"
           placeholder="请输入确认密码"
           v-model="password1"
+          name="password1"
           v-validate="{ required: true, is: password }"
           :class="{ invalid: errors.has('password1') }"
         />
@@ -60,9 +57,9 @@
       </div>
       <div class="controls">
         <input
-          name="agree"
           type="checkbox"
-          :checked="agree"
+          v-model="agree"
+          name="agree"
           v-validate="{ required: true, tongyi: true }"
           :class="{ invalid: errors.has('agree') }"
         />
@@ -94,47 +91,55 @@
 
 <script>
 export default {
-  name: 'Register',
+  name: "Register",
   data() {
     return {
-      phone: '',
-      code: '',
-      password: '',
-      password1: '',
-      agree: true
-    }
+      // 收集表单数据--手机号
+      phone: "",
+      //验证码
+      code: "",
+      //密码
+      password: "",
+      //确认密码
+      password1: "",
+      //是否同意
+      agree: true,
+    };
   },
   methods: {
-    getCode() {
-      //如果获取到验证码
-      const { phone } = this
-
-      this.$store
-        .dispatch('getCode', phone)
-        .then(res => {
-          this.code = this.$store.state.user.code
-        })
-        .catch(err => alert(err.message))
+    //获取验证码
+    async getCode() {
+      //简单判断一下---至少用数据
+      try {
+        //如果获取到验证码
+        const { phone } = this;
+        phone && (await this.$store.dispatch("getCode", phone));
+        //将组件的code属性值变为仓库中验证码[验证码直接自己填写了]
+        this.code = this.$store.state.user.code;
+      } catch (error) {}
     },
+    //用户注册
     async userRegister() {
-      const success = await this.$validator.validateAll()
-
+      const success = await this.$validator.validateAll();
+      //全部表单验证成功，在向服务器发请求，进行祖册
+      //只要有一个表单没有成功，不会发请求
       if (success) {
-        const { phone, code, password, password1 } = this
-        this.$store
-          .dispatch('userRegister', { phone, code, password })
-          .then(res => {
-            if (res.code == 200) {
-              this.$router.push('/login')
-            } else {
-              alert(res.message)
-            }
-          })
-          .catch(err => alert(err.message))
+        try {
+          const { phone, code, password, password1 } = this;
+          await this.$store.dispatch("userRegister", {
+            phone,
+            code,
+            password,
+          });
+          //注册成功进行路由的跳转
+          this.$router.push("/login");
+        } catch (error) {
+          alert(error.message);
+        }
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>

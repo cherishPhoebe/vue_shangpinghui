@@ -14,41 +14,45 @@
           </ul>
 
           <div class="content">
-            <form action="##">
+            <form>
               <div class="input-text clearFix">
                 <span></span>
-                <input type="text" placeholder="邮箱/用户名/手机号" v-model="phone" />
+                <input
+                  type="text"
+                  placeholder="邮箱/用户名/手机号"
+                  v-model="phone"
+                />
               </div>
               <div class="input-text clearFix">
                 <span class="pwd"></span>
-                <input type="text" placeholder="请输入密码" v-model="password" />
+                <input
+                  type="text"
+                  placeholder="请输入密码"
+                  v-model="password"
+                />
               </div>
               <div class="setting clearFix">
                 <label class="checkbox inline">
-                  <input name="m1" type="checkbox" value="2" checked />
+                  <input name="m1" type="checkbox" value="2" checked="" />
                   自动登录
                 </label>
                 <span class="forget">忘记密码？</span>
               </div>
-              <button class="btn" @click="userLogin">登&nbsp;&nbsp;录</button>
+              <button class="btn" @click.prevent="userLogin">
+                登&nbsp;&nbsp;录
+              </button>
             </form>
 
             <div class="call clearFix">
               <ul>
-                <li>
-                  <img src="./images/qq.png" alt />
-                </li>
-                <li>
-                  <img src="./images/sina.png" alt />
-                </li>
-                <li>
-                  <img src="./images/ali.png" alt />
-                </li>
-                <li>
-                  <img src="./images/weixin.png" alt />
-                </li>
+                <li><img src="./images/qq.png" alt="" /></li>
+                <li><img src="./images/sina.png" alt="" /></li>
+                <li><img src="./images/ali.png" alt="" /></li>
+                <li><img src="./images/weixin.png" alt="" /></li>
               </ul>
-              <router-link class="register" to="/register">立即注册</router-link>
+              <router-link class="register" to="/register"
+                >立即注册</router-link
+              >
             </div>
           </div>
         </div>
@@ -74,31 +78,29 @@
 
 <script>
 export default {
-  name: 'Login',
+  name: "Login",
   data() {
     return {
-      phone: '',
-      password: ''
-    }
+      phone: "",
+      password: "",
+    };
   },
   methods: {
-    userLogin() {
-      const { phone, password } = this
-      if (phone && password) {
-        this.$store
-          .dispatch('userLogin', { phone, password })
-          .then(res => {
-            if (res.code == 200) {
-              this.$router.push('/home')
-            } else {
-              alert(res.message)
-            }
-          })
-          .catch(err => alert(err.message))
+    //登录的回调函数
+    async userLogin() {
+      try {
+        //登录成功
+        const { phone, password } = this;
+        phone&&password&&(await this.$store.dispatch("userLogin", { phone, password }));
+        //登录的路由组件：看路由当中是否包含query参数，有：调到query参数指定路由，没有：调到home
+         let toPath = this.$route.query.redirect||"/home";
+         this.$router.push(toPath);
+      } catch (error) {
+        alert(error.message);
       }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style lang="less" scoped>

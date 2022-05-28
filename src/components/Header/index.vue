@@ -68,7 +68,7 @@ export default {
         this.$router.push(loction)
       }
     },
-    loginOut() {
+    logout() {
       this.$store.dispatch('userLogout').then(res => {
         if (res.code == 200) {
           this.$router.push('/home')

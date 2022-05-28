@@ -3,7 +3,7 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <Carousel :list="bannerList"></Carousel>
+        <Carsousel :list="bannerList" />
       </div>
       <div class="right">
         <div class="news">
@@ -13,69 +13,59 @@
           </h4>
           <div class="clearix"></div>
           <ul class="news-list unstyled">
-            <li>
-              <span class="bold">[特惠]</span>备战开学季 全民半价购数码
-            </li>
-            <li>
-              <span class="bold">[公告]</span>备战开学季 全民半价购数码
-            </li>
-            <li>
-              <span class="bold">[特惠]</span>备战开学季 全民半价购数码
-            </li>
-            <li>
-              <span class="bold">[公告]</span>备战开学季 全民半价购数码
-            </li>
-            <li>
-              <span class="bold">[特惠]</span>备战开学季 全民半价购数码
-            </li>
+            <li><span class="bold">[特惠]</span>备战开学季 全民半价购数码</li>
+            <li><span class="bold">[公告]</span>备战开学季 全民半价购数码</li>
+            <li><span class="bold">[特惠]</span>备战开学季 全民半价购数码</li>
+            <li><span class="bold">[公告]</span>备战开学季 全民半价购数码</li>
+            <li><span class="bold">[特惠]</span>备战开学季 全民半价购数码</li>
           </ul>
         </div>
         <ul class="lifeservices">
-          <li class="life-item">
+          <li class=" life-item ">
             <i class="list-item"></i>
             <span class="service-intro">话费</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item ">
             <i class="list-item"></i>
             <span class="service-intro">机票</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item ">
             <i class="list-item"></i>
             <span class="service-intro">电影票</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item ">
             <i class="list-item"></i>
             <span class="service-intro">游戏</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item">
             <i class="list-item"></i>
             <span class="service-intro">彩票</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item">
             <i class="list-item"></i>
             <span class="service-intro">加油站</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item">
             <i class="list-item"></i>
             <span class="service-intro">酒店</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item">
             <i class="list-item"></i>
             <span class="service-intro">火车票</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item ">
             <i class="list-item"></i>
             <span class="service-intro">众筹</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item">
             <i class="list-item"></i>
             <span class="service-intro">理财</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item">
             <i class="list-item"></i>
             <span class="service-intro">礼品卡</span>
           </li>
-          <li class="life-item">
+          <li class=" life-item">
             <i class="list-item"></i>
             <span class="service-intro">白条</span>
           </li>
@@ -89,22 +79,23 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import Swiper from 'swiper'
+import { mapState } from "vuex";
 export default {
-  name: 'ListContainer',
+  name: "",
   mounted() {
-    this.$store.dispatch('getBannerList')
+    //mounted:组件挂载完毕，正常说组件结构（DOM）已经全有了
+    //为什么swiper实例在mounted当中直接书写不可以：因为结构还没有完整
+    this.$store.dispatch("getBannerList");
   },
   computed: {
     ...mapState({
-      bannerList: state => state.home.bannerList
-    })
+      bannerList: (state) => state.home.bannerList,
+    }),
   }
-}
+};
 </script>
 
-<style lang="less" scoped>
+<style scoped lang="less">
 .list-container {
   width: 1200px;
   margin: 0 auto;
@@ -175,7 +166,7 @@ export default {
           width: 25%;
 
           .list-item {
-            background-image: url(./images/icons.png);
+            background-image: url(~@/assets/images/icons.png);
             width: 61px;
             height: 40px;
             display: block;

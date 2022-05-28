@@ -1,9 +1,9 @@
 <template>
   <div class="spec-preview">
     <img :src="imgObj.imgUrl" />
-    <div class="event" @mousemove="handlerMouse"></div>
+    <div class="event" @mousemove="handler"></div>
     <div class="big">
-      <img :src="imgObj.imgUrl" ref="big" />
+      <img :src="imgObj.imgUrl" ref="big"/>
     </div>
     <!-- 遮罩层 -->
     <div class="mask" ref="mask"></div>
@@ -12,42 +12,47 @@
 
 <script>
 export default {
-  name: 'Zoom',
-  props: ['skuImageList'],
+  name: "Zoom",
+  props: ["skuImageList"],
   data() {
     return {
-      currentIndex: 0
+      currentIndex:0
     }
   },
-  mounted() {
-    this.$bus.$on('changeImageIndex', index => {
-      this.currentIndex = index
+  computed:{
+    imgObj(){
+      return this.skuImageList[this.currentIndex]||{}
+    }
+  },
+  mounted(){
+    //全局事件总线：获取兄弟组件传递过来的索引值
+    this.$bus.$on('getIndex',(index)=>{
+        //修改当前响应式数据
+        this.currentIndex = index;
     })
   },
   methods: {
-    handlerMouse(event) {
-      let mask = this.$refs.mask
-      let big = this.$refs.big
-      let left = event.offsetX - mask.offsetWidth / 2
-      let top = event.offsetY - mask.offsetHeight / 2
+    handler(event) {
+      let mask = this.$refs.mask;
+      let big = this.$refs.big;
+      let left = event.offsetX - mask.offsetWidth/2;
+      let top = event.offsetY - mask.offsetHeight/2;
       //约束范围
-      if (left <= 0) left = 0
-      if (left >= mask.offsetWidth) left = mask.offsetWidth
-      if (top <= 0) top = 0
-      if (top >= mask.offsetHeight) top = mask.offsetHeight
+      if(left <=0) left = 0;
+      if(left >=mask.offsetWidth) left = mask.offsetWidth;
+      if(top<=0)top = 0;
+      if(top>=mask.offsetHeight) top = mask.offsetHeight;
       //修改元素的left|top属性值
-      mask.style.left = left + 'px'
-      mask.style.top = top + 'px'
-      big.style.left = -2 * left + 'px'
-      big.style.top = -2 * top + 'px'
-    }
+      mask.style.left = left+'px';
+      mask.style.top = top +'px';
+      big.style.left = - 2 * left+'px';
+      big.style.top = -2 * top +'px';
+
+
+    },
   },
-  computed: {
-    imgObj() {
-      return this.skuImageList[this.currentIndex] || {}
-    }
-  }
-}
+
+};
 </script>
 
 <style lang="less">

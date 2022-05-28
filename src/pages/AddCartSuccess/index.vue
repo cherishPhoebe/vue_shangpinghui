@@ -1,22 +1,22 @@
 <template>
   <div class="cart-complete-wrap">
     <div class="cart-complete">
-      <h3>
-        <i class="sui-icon icon-pc-right"></i>商品已成功加入购物车！
-      </h3>
+      <h3><i class="sui-icon icon-pc-right"></i>商品已成功加入购物车！</h3>
       <div class="goods">
         <div class="left-good">
           <div class="left-pic">
             <img :src="skuInfo.skuDefaultImg" />
           </div>
           <div class="right-info">
-            <p class="title">{{skuInfo.skuName}}</p>
-            <p class="attr">{{skuInfo.skuDesc}} 数量：{{this.$route.query.skuNum}}</p>
+            <p class="title">{{ skuInfo.skuName }}</p>
+            <p class="attr">
+              {{ skuInfo.skuDesc }} 数量:{{ $route.query.skuNum }}
+            </p>
           </div>
         </div>
         <div class="right-gocart">
-          <router-link :to="`/detail/${skuInfo.id}`" class="sui-btn btn-xlarge">查看商品详情</router-link>
-          <router-link to="/shopcart">去购物车结算 ></router-link>
+          <router-link class="sui-btn btn-xlarge" :to="`/detail/${skuInfo.id}`">查看商品详情</router-link>
+          <router-link to="/shopcart">去购物车结算</router-link>
         </div>
       </div>
     </div>
@@ -25,15 +25,14 @@
 
 <script>
 export default {
-  name: 'AddCartSuccess',
+  name: "AddCartSuccess",
   computed: {
     skuInfo() {
-      return JSON.parse(sessionStorage.getItem('SKUINFO'))
-    }
-  }
-}
+      return JSON.parse(sessionStorage.getItem("SKUINFO"));
+    },
+  },
+};
 </script>
-
 
 <style lang="less" scoped>
 .cart-complete-wrap {

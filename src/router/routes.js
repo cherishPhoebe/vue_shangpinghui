@@ -8,6 +8,7 @@ import Detail from '@/pages/Detail'
 import AddCartSuccess from '@/pages/AddCartSuccess'
 import ShopCart from '@/pages/ShopCart'
 import Trade from '@/pages/Trade'
+import Pay from '@/pages/Pay'
 
 export default [{
     path:'/home',
@@ -42,6 +43,10 @@ export default [{
             next('/shopcart');
         }
     }
+},{
+    name:'pay',
+    path:'/pay',
+    component:Pay
 },{
     path:'/login',
     component:Login,

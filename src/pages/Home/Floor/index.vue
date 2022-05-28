@@ -2,11 +2,11 @@
   <div class="floor">
     <div class="py-container">
       <div class="title clearfix">
-        <h3 class="fl">{{list.name}}</h3>
+        <h3 class="fl">{{ list.name }}</h3>
         <div class="fr">
           <ul class="nav-tabs clearfix">
-            <li :class="{active:index == 0}" v-for="(nav,index) in list.navList" :key="index">
-              <a href="#tab1" data-toggle="tab">{{nav.text}}</a>
+            <li v-for="(nav, index) in list.navList" :key="index">
+              <a href="#tab1" data-toggle="tab">{{ nav.text }}</a>
             </li>
           </ul>
         </div>
@@ -16,12 +16,15 @@
           <div class="floor-1">
             <div class="blockgary">
               <ul class="jd-list">
-                <li v-for="(keyword,index) in list.keywords" :key="index">{{keyword}}</li>
+                <li v-for="(keyword, index) in list.keywords" :key="index">
+                  {{ keyword }}
+                </li>
               </ul>
               <img :src="list.imgUrl" />
             </div>
             <div class="floorBanner">
-              <Carousel :list="list.carouselList"></Carousel>
+              <!-- 轮播图的地方 -->
+               <Carsousel :list="list.carouselList" />
             </div>
             <div class="split">
               <span class="floor-x-line"></span>
@@ -52,13 +55,20 @@
 </template>
 
 <script>
+
 export default {
-  name: 'Floor',
-  props: ['list']
-}
+  name: "",
+  props: ["list"],
+  //组件挂载完毕的地方
+  mounted() {
+    //第一次书写Swiper的时候：在mounted当中书写是不可以的，但是为什么现在这里可以啦！
+    //第一次书写轮播图的时候，是在当前组件内部发请求、动态渲染解构【前台至少服务器数据需要回来】，因此当年的写法在这里不行
+    //现在的这种写法为什么可以：因为请求是父组件发的，父组件通过props传递过来的，而且结构都已经有了的情况下执行mounted
+  },
+};
 </script>
 
-<style lang="less" scoped>
+<style scoped lang="less">
 .floor {
   margin-top: 15px;
 
@@ -93,7 +103,7 @@ export default {
               background-color: #fff;
 
               &::after {
-                content: '|';
+                content: "|";
                 padding: 0 10px;
               }
             }
@@ -101,7 +111,7 @@ export default {
             &:nth-child(7) {
               a {
                 &::after {
-                  content: '';
+                  content: "";
                 }
               }
             }

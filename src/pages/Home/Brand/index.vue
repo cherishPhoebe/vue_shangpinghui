@@ -38,10 +38,12 @@
 </template>
 
 <script>
-export default {}
+export default {
+  name: "",
+};
 </script>
 
-<style lang="less" scoped>
+<style scoped lang="less">
 .brand {
   margin: 10px 0;
 

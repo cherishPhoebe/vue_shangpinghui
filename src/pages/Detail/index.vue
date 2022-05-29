@@ -78,15 +78,14 @@
             <div class="chooseArea">
               <div class="choosed"></div>
               <dl
-                v-for="(spuSaleAttr, index) in spuSaleAttrList"
+                v-for="(spuSaleAttr) in spuSaleAttrList"
                 :key="spuSaleAttr.id"
               >
                 <dt class="title">{{ spuSaleAttr.saleAttrName }}</dt>
                 <dd
                   changepirce="0"
                   :class="{ active: spuSaleAttrValue.isChecked == 1 }"
-                  v-for="(spuSaleAttrValue,
-                  index) in spuSaleAttr.spuSaleAttrValueList"
+                  v-for="(spuSaleAttrValue) in spuSaleAttr.spuSaleAttrValueList"
                   :key="spuSaleAttrValue.id"
                   @click="
                     changeActive(
@@ -387,7 +386,7 @@ export default {
   },
   mounted() {
     //派发action获取产品详情的信息
-    this.$store.dispatch("getGoodInfo", this.$route.params.skuid);
+    this.$store.dispatch("getGoodInfo", this.$route.params.skuId);
   },
   computed: {
     ...mapGetters(["categoryView", "skuInfo", "spuSaleAttrList"]),
@@ -427,7 +426,7 @@ export default {
       try {
         //成功
         await this.$store.dispatch("addOrUpdateShopCart", {
-          skuId: this.$route.params.skuid,
+          skuId: this.$route.params.skuId,
           skuNum: this.skuNum,
         });
         //3:进行路由跳转
